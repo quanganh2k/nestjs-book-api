@@ -72,6 +72,8 @@ export class UserController {
       throw new NotFoundException();
     }
 
+    delete user.password;
+
     return user;
   }
 

@@ -75,8 +75,8 @@ export class BookController {
     return nextBook;
   }
 
-  @Post()
   @UseGuards(JwtAuthGuard)
+  @Post()
   async addBook(@Body() body: AddBookDto) {
     const foundBook = await this.bookService.getBookByName(body.name);
 
@@ -115,8 +115,8 @@ export class BookController {
     };
   }
 
-  @Patch(':id')
   @UseGuards(JwtAuthGuard)
+  @Patch(':id')
   async editBook(@Param('id') id: string, @Body() body: EditBookDto) {
     const foundBook = await this.bookService.getBookById(+id);
 
@@ -182,8 +182,8 @@ export class BookController {
     };
   }
 
-  @Delete(':id')
   @UseGuards(JwtAuthGuard)
+  @Delete(':id')
   async deleteBook(@Param('id') id: string) {
     await this.bookService.deleteImage(+id);
 
@@ -195,8 +195,8 @@ export class BookController {
     };
   }
 
-  @Delete()
   @UseGuards(JwtAuthGuard)
+  @Delete()
   async deleteMultiple(@Query('listIds') listIds: string[]) {
     if (listIds) {
       const newListIds = listIds.map((el) => +el);

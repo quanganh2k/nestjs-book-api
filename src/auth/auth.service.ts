@@ -67,9 +67,12 @@ export class AuthService {
       throw new ForbiddenException('Missing access token');
     }
 
+    delete foundUser.password;
+
     return {
       message: 'Login successfully',
       accessToken,
+      user: foundUser,
     };
   }
 

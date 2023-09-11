@@ -73,8 +73,8 @@ export class PublisherController {
     return publisher;
   }
 
-  @Post()
   @UseGuards(JwtAuthGuard)
+  @Post()
   async addPublisher(@Body() body: AddPublisherDto) {
     const foundPublisher = await this.publisherService.getPublisherByName(
       body.name,
@@ -92,8 +92,8 @@ export class PublisherController {
     };
   }
 
-  @Patch(':id')
   @UseGuards(JwtAuthGuard)
+  @Patch(':id')
   async editPublisher(@Param('id') id: string, @Body() body: EditPublisherDto) {
     const foundPublisher = await this.publisherService.getPublisherById(+id);
 
@@ -127,8 +127,8 @@ export class PublisherController {
     };
   }
 
-  @Delete(':id')
   @UseGuards(JwtAuthGuard)
+  @Delete(':id')
   async deletePublisher(@Param('id') id: string) {
     await this.bookService.updateBeforeDeletePrimaryKey('publisherId', +id);
 
@@ -140,8 +140,8 @@ export class PublisherController {
     };
   }
 
-  @Delete()
   @UseGuards(JwtAuthGuard)
+  @Delete()
   async deleteMultiple(@Query('listIds') listIds: string[]) {
     if (listIds) {
       const newListIds = listIds.map((el) => +el);

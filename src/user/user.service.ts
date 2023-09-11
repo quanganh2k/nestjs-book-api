@@ -87,16 +87,12 @@ export class UserService {
     return response;
   }
 
-  async getUserDetails(id: number): Promise<Omit<Users, 'password'>> {
+  async getUserDetails(id: number): Promise<Users> {
     const foundUser = await this.prisma.users.findUnique({
       where: {
         id,
       },
     });
-
-    if (foundUser) {
-      delete foundUser.password;
-    }
 
     return foundUser;
   }

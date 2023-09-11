@@ -73,8 +73,8 @@ export class CategoryController {
     return category;
   }
 
-  @Post()
   @UseGuards(JwtAuthGuard)
+  @Post()
   async addCategory(@Body() body: AddCategoryDto) {
     const foundCategory = await this.categoryService.getCategoryByName(
       body.name,
@@ -92,8 +92,8 @@ export class CategoryController {
     };
   }
 
-  @Patch(':id')
   @UseGuards(JwtAuthGuard)
+  @Patch(':id')
   async editCategory(@Param('id') id: string, @Body() body: EditCategoryDto) {
     const foundCategory = await this.categoryService.getCategoryById(+id);
 
@@ -124,8 +124,8 @@ export class CategoryController {
     };
   }
 
-  @Delete(':id')
   @UseGuards(JwtAuthGuard)
+  @Delete(':id')
   async deleteCategory(@Param('id') id: string) {
     await this.bookService.updateBeforeDeletePrimaryKey('categoryId', +id);
 
@@ -137,8 +137,8 @@ export class CategoryController {
     };
   }
 
-  @Delete()
   @UseGuards(JwtAuthGuard)
+  @Delete()
   async deleteMultiple(@Query('listIds') listIds: string[]) {
     if (listIds) {
       const newListIds = listIds.map((el) => +el);
