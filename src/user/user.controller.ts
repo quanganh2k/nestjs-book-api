@@ -80,7 +80,7 @@ export class UserController {
   }
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async addUser(@Body() body: AddUserDto) {
     const { email, password, firstName, lastName } = body;
     const foundUser = await this.userService.getUserByEmail(email);
@@ -109,7 +109,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async editUser(@Param('id') id: string, @Body() body: EditUserDto) {
     const foundUser = await this.userService.getUserById(+id);
 
@@ -151,7 +151,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async deleteUser(@Param('id') id: string) {
     const userFound = await this.userService.getUserById(+id);
 
