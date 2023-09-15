@@ -70,7 +70,9 @@ export class CategoryController {
       throw new NotFoundException();
     }
 
-    return category;
+    return {
+      data: category,
+    };
   }
 
   @UseGuards(JwtAuthGuard)

@@ -74,11 +74,13 @@ export class UserController {
 
     delete user.password;
 
-    return user;
+    return {
+      data: user,
+    };
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async addUser(@Body() body: AddUserDto) {
     const { email, password, firstName, lastName } = body;
     const foundUser = await this.userService.getUserByEmail(email);
@@ -107,7 +109,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async editUser(@Param('id') id: string, @Body() body: EditUserDto) {
     const foundUser = await this.userService.getUserById(+id);
 
@@ -115,7 +117,7 @@ export class UserController {
       throw new BadRequestException('User does not exist');
     }
 
-    const nextBody = {};
+    const nextBody: EditUserDto = {};
     for (const key in body) {
       if (body[key] !== foundUser[key]) {
         if (key === 'password') {
@@ -132,6 +134,14 @@ export class UserController {
       }
     }
 
+    if (nextBody.email) {
+      const otherUser = await this.userService.getUserByEmail(nextBody.email);
+
+      if (otherUser) {
+        throw new BadRequestException('Email already exists');
+      }
+    }
+
     const user = await this.userService.editUser(id, nextBody);
 
     return {
@@ -141,8 +151,14 @@ export class UserController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async deleteUser(@Param('id') id: string) {
+    const userFound = await this.userService.getUserById(+id);
+
+    if (!userFound) {
+      throw new BadRequestException('User does not exist');
+    }
+
     const user = await this.userService.deleteUser(id);
 
     return {

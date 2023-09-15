@@ -70,7 +70,9 @@ export class PublisherController {
       throw new NotFoundException();
     }
 
-    return publisher;
+    return {
+      data: publisher,
+    };
   }
 
   @UseGuards(JwtAuthGuard)

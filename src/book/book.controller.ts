@@ -72,7 +72,9 @@ export class BookController {
       images: images.map((el) => el.source),
     };
 
-    return nextBook;
+    return {
+      data: nextBook,
+    };
   }
 
   @UseGuards(JwtAuthGuard)
